@@ -36,16 +36,7 @@ const AIResultsComponent = ({ healthStatus, onConsultVeterinarian }) => {
 
   return (
     <View style={[styles.container, healthStatusStyle]}>
-      <Image
-        style={styles.icon}
-        source={
-          healthStatus === 'Healthy'
-            ? require('../assets/chicken_healthy.png') // Image for healthy
-            : healthStatus === 'Sick'
-            ? require('../assets/chicken_sick.png') // Image for sick
-            : require('../assets/chicken_warning.png') // Image for warning
-        }
-      />
+     
       <Text style={[styles.statusText, { color: healthStatusStyle.color }]}>
         {healthStatus}
       </Text>
