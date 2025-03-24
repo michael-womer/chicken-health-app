@@ -8,6 +8,8 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import AIResultsComponent from '@/components/AIResultsComponent';
 
 export default function Results() {
+  const healthStatus = "Sick";  // Define the health status
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -18,10 +20,11 @@ export default function Results() {
           name="chevron.left.forwardslash.chevron.right"
           style={styles.headerImage} // Applying the style here
         />
-      }>
+      }
+    >
       <AIResultsComponent
-        healthStatus={"test"}
-        onConsultVeterinarian={() => { console.log("test"); }}
+        healthStatus={healthStatus}  // Pass healthStatus prop here
+        onConsultVeterinarian={() => { console.log(healthStatus); }}  // Use the healthStatus when calling the function
       />
     </ParallaxScrollView>
   );
