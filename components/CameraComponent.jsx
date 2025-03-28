@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { View, Button, Text, StyleSheet, Alert } from 'react-native';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import { useDispatch } from 'react-redux';  // Import useDispatch
+import { setPhotoUri } from '../redux/actions';  // Import the action to set the photo URI
 
 const CameraComponent = ({ onCapture }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
-  const [photoUri, setPhotoUri] = useState(null);
+  const [photoUri, setPhotoUriState] = useState(null);
   
-  // Getting the available camera devices
+  // Get available camera devices
   const devices = useCameraDevices();
-  const device = devices.back; // For rear camera, use 'front' for front camera
+  const device = devices.back;  // Use rear camera by default
   
+  // Create dispatch function
+  const dispatch = useDispatch();
+
   // Request camera permission
   useEffect(() => {
     const requestPermission = async () => {
@@ -33,8 +38,9 @@ const CameraComponent = ({ onCapture }) => {
         const photo = await device.takePhoto({
           qualityPrioritization: 'quality',
         });
-        setPhotoUri(photo.uri);
-        onCapture(photo.uri); // Pass the photo URI to parent for further processing
+        setPhotoUriState(photo.uri);  // Set photo URI to local state
+        dispatch(setPhotoUri(photo.uri));  // Dispatch action to Redux store with the captured photo URI
+        onCapture(photo.uri);  // Pass the photo URI to the parent component for further processing
       } catch (error) {
         Alert.alert('Error', 'Failed to take photo.');
         console.error(error);
