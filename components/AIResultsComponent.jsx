@@ -1,8 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux'; // Import hooks for Redux
+import { setHealthStatus } from '../redux/actions'; // Import action to update health status
 
 // AI Results Component to display the health status and actionable steps
-const AIResultsComponent = ({ healthStatus, onConsultVeterinarian }) => {
+const AIResultsComponent = ({ onConsultVeterinarian }) => {
+  // Access health status and actionable steps from Redux store
+  const { healthStatus, actionableSteps } = useSelector((state) => state);
+  
+  // Create dispatch function
+  const dispatch = useDispatch();
+
   // Define styles for each health status
   const getHealthStatusStyle = (status) => {
     switch (status) {
@@ -17,26 +25,15 @@ const AIResultsComponent = ({ healthStatus, onConsultVeterinarian }) => {
     }
   };
 
-  // Actionable steps based on health status
-  const getActionableSteps = (status) => {
-    switch (status) {
-      case 'Healthy':
-        return 'Keep monitoring your chicken regularly.';
-      case 'Sick':
-        return 'Consult a veterinarian immediately.';
-      case 'Warning':
-        return 'Check for symptoms and provide care.';
-      default:
-        return 'No data available.';
-    }
-  };
-
   const healthStatusStyle = getHealthStatusStyle(healthStatus);
-  const actionableSteps = getActionableSteps(healthStatus);
+
+  const handleHealthStatusChange = (status) => {
+    // Dispatch the action to update the health status in Redux store
+    dispatch(setHealthStatus(status));
+  };
 
   return (
     <View style={[styles.container, healthStatusStyle]}>
-     
       <Text style={[styles.statusText, { color: healthStatusStyle.color }]}>
         {healthStatus}
       </Text>
@@ -45,6 +42,13 @@ const AIResultsComponent = ({ healthStatus, onConsultVeterinarian }) => {
       {healthStatus === 'Sick' && (
         <Button title="Consult Veterinarian" onPress={onConsultVeterinarian} />
       )}
+
+      {/* Buttons to simulate changing health status */}
+      <View style={styles.buttonContainer}>
+        <Button title="Set Healthy" onPress={() => handleHealthStatusChange('Healthy')} />
+        <Button title="Set Sick" onPress={() => handleHealthStatusChange('Sick')} />
+        <Button title="Set Warning" onPress={() => handleHealthStatusChange('Warning')} />
+      </View>
     </View>
   );
 };
@@ -72,6 +76,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 20,
+  },
+  buttonContainer: {
+    marginTop: 20,
   },
 });
 
