@@ -8,6 +8,12 @@ import { LoadingComponent } from 'components/LoadingComponent.jsx';
 import { NotificationComponent } from 'components/NotificationComponent.jsx';
 import { Provider } from 'react-redux'; // Import Provider from react-redux
 import store from './redux/store'; // Import the store
+import AppNavigator from './navigation/AppNavigator';
+
+const App = () => {
+  return <AppNavigator />;
+};
+
 
 function App() {
   return (
