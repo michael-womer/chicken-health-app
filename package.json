@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@google-cloud/vision": "^5.1.0",
     "@react-native-firebase/app": "^21.13.0",
     "@react-native-firebase/messaging": "^21.13.0",
     "@react-navigation/bottom-tabs": "^7.3.4",
