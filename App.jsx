@@ -8,6 +8,28 @@ import { LoadingComponent } from 'components/LoadingComponent.jsx';
 import { NotificationComponent } from 'components/NotificationComponent.jsx';
 import { Provider } from 'react-redux'; // Import Provider from react-redux
 import store from './redux/store'; // Import the store
+import { requestNotificationPermission, getFcmToken, setupPushNotificationListeners } from './utils/firebaseConfig';
+
+// Request notification permissions when the app starts
+useEffect(() => {
+  const initNotifications = async () => {
+    const hasPermission = await requestNotificationPermission();
+    if (hasPermission) {
+      const token = await getFcmToken();
+      console.log('FCM Token:', token);
+
+      // Set up listeners to handle incoming notifications
+      setupPushNotificationListeners((message) => {
+        console.log('Notification received:', message);
+        // You can now navigate or show the alert based on the notification
+      });
+    } else {
+      console.log('Notification permission denied');
+    }
+  };
+
+  initNotifications();
+}, []);
 import AppNavigator from './navigation/AppNavigator';
 
 const App = () => {
