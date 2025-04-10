@@ -1,19 +1,23 @@
 {
-  "extends": "./tsconfig.base.json", // Extend from the base config
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./build",             // Output directory for compiled files
-    "sourceMap": true,               // Enable source maps for debugging
-    "baseUrl": ".",                  // Base directory for module resolution
+    "outDir": "./build",
+    "sourceMap": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]               // Alias `@` to the `src` folder
+      "@/*": [
+        "src/*"
+      ]
     }
   },
   "include": [
-    "src/**/*.ts",                   // Include all TypeScript files in the `src` folder
-    "tests/**/*.ts"                  // Include test files if they exist
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ],
   "exclude": [
-    "node_modules",                  // Exclude the node_modules folder
-    "build"                          // Exclude the build folder from compilation
+    "node_modules",
+    "build"
   ]
 }

@@ -1,14 +1,10 @@
-// src/components/HapticTab.tsx
-
 import React from 'react';
-import { Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-const HapticTab = () => {
+export const HapticTab = ({ children, onPress }: any) => {
   return (
-    <View>
-      <Text>HapticTab Component</Text>
-    </View>
+    <TouchableOpacity onPress={onPress} style={{ flex: 1 }}>
+      {children}
+    </TouchableOpacity>
   );
 };
-
-export { HapticTab };

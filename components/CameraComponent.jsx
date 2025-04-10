@@ -3,6 +3,29 @@ import { View, Button, Text, StyleSheet, Alert } from 'react-native';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { useDispatch } from 'react-redux';  // Import useDispatch
 import { setPhotoUri } from '../redux/actions';  // Import the action to set the photo URI
+import { analyzeImage, processAnalysisResults } from './utils/aiAnalysis';
+
+// Example in the CameraComponent
+const handleCapture = async () => {
+  if (isCameraReady && hasPermission) {
+    try {
+      const photo = await device.takePhoto({
+        qualityPrioritization: 'quality',
+      });
+      setPhotoUri(photo.uri);
+
+      // Analyze the image
+      const analysisResult = await analyzeImage(photo.uri);
+      const message = processAnalysisResults(analysisResult);
+      Alert.alert('Analysis Result', message);
+      
+      // Optionally, pass the analysis data to a parent component or store it
+    } catch (error) {
+      Alert.alert('Error', 'Failed to take photo.');
+      console.error(error);
+    }
+  }
+};
 
 const CameraComponent = ({ onCapture }) => {
   const [hasPermission, setHasPermission] = useState(null);
